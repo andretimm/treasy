@@ -1,0 +1,15 @@
+#Visual Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Bower
+/components
+
+#node
+/node_modules
+
+#Build
+/dist

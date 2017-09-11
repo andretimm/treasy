@@ -1,0 +1,22 @@
+{
+  "name": "treasy",
+  "version": "1.0.0",
+  "description": "Desafio treasy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andretimm/treasy.git"
+  },
+  "author": "andre.timm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andretimm/treasy/issues"
+  },
+  "homepage": "https://github.com/andretimm/treasy#readme",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
