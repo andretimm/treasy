@@ -6,83 +6,90 @@ app.controller('myCtrl',['$scope',
                         'ivhTreeviewOptions',
                         function($scope, ivhTreeviewMgr,$interval,ivhTreeviewBfs,ivhTreeviewOptions) {
 
-    $scope.modalShown = false;
+    // Vars
+    var _this = $scope;
 
-    $scope.produto = {
+
+    _this.modalShown = false;
+
+    _this.produto = {
             codigo : null,
             descricao : null,
             observacao : null,
             edit : false
     };
 
-    $scope.valid = {
+    _this.valid = {
                     cod : false,
                     desc: false,
                     salva: false
                    };
 
+    var opts = ivhTreeviewOptions();
+    var isExpanded = opts.expandedAttribute;
 
-    $scope.edit = function(){
-        if ($scope.select != null) {
-            $scope.produto.codigo = $scope.select.codigo;
-            $scope.produto.descricao = $scope.select.descricao;
-            $scope.produto.observacao = $scope.select.observacao;
-            $scope.produto.edit = true;
-            $scope.valid.save = true;
-            $scope.toggleModal();
+
+    _this.edit = function(){
+        if (_this.select != null) {
+            _this.produto.codigo = _this.select.codigo;
+            _this.produto.descricao = _this.select.descricao;
+            _this.produto.observacao = _this.select.observacao;
+            _this.produto.edit = true;
+            _this.valid.save = true;
+            _this.toggleModal();
         }
     }
 
-    $scope.tt = function(){  
-        if (!$scope.produto.edit){
-            $scope.add($scope.produto);
+    _this.tt = function(){  
+        if (!_this.produto.edit){
+            _this.add(_this.produto);
         }else{
             salva();
         }      
         
-        $scope.modalShown = !$scope.modalShown;
+        _this.modalShown = !_this.modalShown;
         resetModal();
     }
 
     function salva(){
-        ivhTreeviewBfs($scope.stuff, function(node, parents) {
-            if(node === $scope.select) {
-                console.log($scope.produto.observacao);
-              node.descricao = $scope.produto.descricao;
-              node.observacao = $scope.produto.observacao;
+        ivhTreeviewBfs(_this.stuff, function(node, parents) {
+            if(node === _this.select) {
+                console.log(_this.produto.observacao);
+              node.descricao = _this.produto.descricao;
+              node.observacao = _this.produto.observacao;
               console.log(node.observacao);
             }
           });
     }
 
-    $scope.changeCodigo = function(){        
+    _this.changeCodigo = function(){        
         validaCod();
-        $scope.validaBtnSave();
+        _this.validaBtnSave();
     }
 
-    $scope.leaveCodigo = function(){
+    _this.leaveCodigo = function(){
         validaCod();
-        $scope.validaBtnSave();
+        _this.validaBtnSave();
        
     }
 
-    $scope.changeDesc = function(){        
+    _this.changeDesc = function(){        
         validaDesc();
-        $scope.validaBtnSave();
+        _this.validaBtnSave();
     }
 
-    $scope.leaveDesc = function(){
+    _this.leaveDesc = function(){
         validaDesc();
-        $scope.validaBtnSave();     
+        _this.validaBtnSave();     
     }
 
     function resetModal(){
-        $scope.valid = {
+        _this.valid = {
                     cod : false,
                     desc: false,
                     salva: false
                 };
-        $scope.produto = {
+                _this.produto = {
                     codigo : null,
                     descricao : null,
                     observacao : null,
@@ -91,90 +98,94 @@ app.controller('myCtrl',['$scope',
     }
     
     function validaCod(){
-        if ($scope.produto.codigo == null) {
-            $scope.valid.cod = true;
-        }else if(!$scope.produto.edit){
-            $scope.valid.cod =_123();
+        if (_this.produto.codigo == null) {
+            _this.valid.cod = true;
+        }else if(!_this.produto.edit){
+            console.log("1111");
+            _this.valid.cod =_123();
+            console.log(_this.valid.cod);
         }  
         
     }
 
-    function validaDesc(){
-        console.log($scope.produto.descricao);
-        if ($scope.produto.descricao == null || $scope.produto.descricao == '' ) {
-            $scope.valid.desc = true;
+    function validaDesc(){        
+        if (_this.produto.descricao == null || _this.produto.descricao == '' ) {
+            _this.valid.desc = true;
         }else{
-            $scope.valid.desc = false;
+            _this.valid.desc = false;
         }          
     }
 
-    $scope.validaBtnSave = function(){
-        console.log(!$scope.valid.cod  && !$scope.valid.desc);
-        if (!$scope.valid.cod  && !$scope.valid.desc) {
-            $scope.valid.salva = true;
+    _this.validaBtnSave = function(){
+        if(_this.produto.descricao != null &&
+            _this.produto.descricao != '' && 
+            _this.produto.codigo != null ){        
+            if (_this.valid.cod == false && _this.valid.desc == false) {
+                _this.valid.salva = true;
+            }else{
+                _this.valid.salva = false;
+            }
         }else{
-            $scope.valid.salva = false;
+            _this.valid.salva = false;
         }
     }
 
     function _123(){
         var r = false;
-        ivhTreeviewBfs($scope.stuff, function(node, parents) {
-            if(node.codigo == $scope.produto.codigo){
+        ivhTreeviewBfs(_this.stuff, function(node, parents) {
+            if(node.codigo == _this.produto.codigo){
                 r = true;
             }
         });
         return r;
     }
 
-    $scope.toggleModal = function() {
-        console.log($scope.valid.save);
-        $scope.modalShown = !$scope.modalShown;
+    _this.toggleModal = function() {
+        console.log(_this.valid.save);
+        _this.modalShown = !_this.modalShown;
     };
+    
 
-    var opts = ivhTreeviewOptions();
-    var isExpanded = opts.expandedAttribute;
-
-    $scope.onFilterChange = function(str) {
+    _this.onFilterChange = function(str) {
         if(!str) {
-          ivhTreeviewBfs($scope.stuff, function(node) {
+          ivhTreeviewBfs(_this.stuff, function(node) {
             node[isExpanded] = node.savedExpandedState;
           });
         }
         
         if(1 === str.length) {
-          ivhTreeviewBfs($scope.stuff, function(node) {
+          ivhTreeviewBfs(_this.stuff, function(node) {
             node.savedExpandedState = node[isExpanded];
           });
-          ivhTreeviewMgr.expandRecursive($scope.stuff);
+          ivhTreeviewMgr.expandRecursive(_this.stuff);
         }
-      };
+    };
 
-    $scope.teste= function(ivhNode, ivhIsSelected, ivhTree){
-        if ($scope.select != null &&
-            $scope.select.codigo == ivhNode.codigo) {
-            ivhTreeviewMgr.deselectAll($scope.stuff);
-            $scope.select = null; 
+    _this.teste= function(ivhNode, ivhIsSelected, ivhTree){
+        if (_this.select != null &&
+            _this.select.codigo == ivhNode.codigo) {
+            ivhTreeviewMgr.deselectAll(_this.stuff);
+            _this.select = null; 
         }else{
-            ivhTreeviewMgr.deselectAll($scope.stuff);   
+            ivhTreeviewMgr.deselectAll(_this.stuff);   
             ivhNode.selected = true;
-            $scope.select = ivhNode;
+            _this.select = ivhNode;
         }
         
         
     }   
 
-    $scope.expandPens = function() {
-        ivhTreeviewMgr.expandRecursive($scope.stuff, $scope.stuff);
+    _this.expandPens = function() {
+        ivhTreeviewMgr.expandRecursive(_this.stuff, _this.stuff);
       };
       
-      $scope.collapsePens = function() {
-        ivhTreeviewMgr.collapseRecursive($scope.stuff, $scope.stuff);
+      _this.collapsePens = function() {
+        ivhTreeviewMgr.collapseRecursive(_this.stuff, _this.stuff);
       };
 
-    $scope.add = function(add){
-        if ($scope.select == null) {
-            $scope.stuff.push(
+      _this.add = function(add){
+        if (_this.select == null) {
+            _this.stuff.push(
                 {
                     codigo: add.codigo,
                     descricao : add.descricao,
@@ -183,7 +194,7 @@ app.controller('myCtrl',['$scope',
                 }
             );
         }else{
-        $scope.select.children.push(
+            _this.select.children.push(
             {
                 codigo: add.codigo,
                 descricao : add.descricao,
@@ -197,28 +208,28 @@ app.controller('myCtrl',['$scope',
         }, 500);
     }
 
-    $scope.delete= function() {
-        ivhTreeviewBfs($scope.stuff, function(node, parents) {
-            if(node === $scope.select) {
+    _this.delete= function() {
+        ivhTreeviewBfs(_this.stuff, function(node, parents) {
+            if(node === _this.select) {
               if(parents.length) {
                 var nIx = parents[0].children.indexOf(node);
                 parents[0].children.splice(nIx, 1);
-                ivhTreeviewMgr.validate($scope.stuff);
+                ivhTreeviewMgr.validate(_this.stuff);
               } else {
-                var nIx = $scope.stuff.indexOf(node);
-                $scope.stuff.splice(nIx, 1);
-                ivhTreeviewMgr.validate($scope.stuff);
+                var nIx = _this.stuff.indexOf(node);
+                _this.stuff.splice(nIx, 1);
+                ivhTreeviewMgr.validate(_this.stuff);
               }
             }
           }); 
 
-          $scope.select = null;
+          _this.select = null;
           
     }
 
-    $scope.select = null;
+    _this.select = null;
 
-    $scope.stuff = [{
+    _this.stuff = [{
         codigo : 1,
         descricao: 'Stuff',
         observacao: 'teste',
