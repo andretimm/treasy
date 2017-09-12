@@ -59,7 +59,10 @@
 	   </div>
 
 
-	   <input type="text"  class="form-control" ng-model="filter" placeholder="Digite para filtrar.."/>
+	   <input type="text" class="form-control" 
+				ng-model="filter"
+				ng-change="onFilterChange(filter)" 
+				placeholder="Digite para filtrar.."/>
 	   
 	   <div ivh-treeview="stuff"
 	   		ivh-treeview-filter="filter"

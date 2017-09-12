@@ -3,7 +3,8 @@ app.controller('myCtrl',['$scope',
                         'ivhTreeviewMgr',
                         '$interval',
                         'ivhTreeviewBfs',
-                        function($scope, ivhTreeviewMgr,$interval,ivhTreeviewBfs) {
+                        'ivhTreeviewOptions',
+                        function($scope, ivhTreeviewMgr,$interval,ivhTreeviewBfs,ivhTreeviewOptions) {
 
     $scope.modalShown = false;
 
@@ -131,6 +132,24 @@ app.controller('myCtrl',['$scope',
         $scope.modalShown = !$scope.modalShown;
     };
 
+    var opts = ivhTreeviewOptions();
+    var isExpanded = opts.expandedAttribute;
+
+    $scope.onFilterChange = function(str) {
+        if(!str) {
+          ivhTreeviewBfs($scope.stuff, function(node) {
+            node[isExpanded] = node.savedExpandedState;
+          });
+        }
+        
+        if(1 === str.length) {
+          ivhTreeviewBfs($scope.stuff, function(node) {
+            node.savedExpandedState = node[isExpanded];
+          });
+          ivhTreeviewMgr.expandRecursive($scope.stuff);
+        }
+      };
+
     $scope.teste= function(ivhNode, ivhIsSelected, ivhTree){
         if ($scope.select != null &&
             $scope.select.codigo == ivhNode.codigo) {
@@ -207,13 +226,7 @@ app.controller('myCtrl',['$scope',
           codigo : 2,
           descricao: 'Hats',
           observacao: 'teste',
-          children: [
-            {codigo : 3,descricao: 'Flat cap',observacao: 'teste'},
-            {codigo : 4,descricao: 'Fedora',observacao: 'teste'},
-            {codigo : 5,descricao: 'Baseball',observacao: 'teste'},
-            {codigo : 6,descricao: 'Top hat',observacao: 'teste'},
-            {codigo : 7,descricao: 'Gatsby',observacao: 'teste'}
-          ]
+          children: []
         }]
     }];
 }]);
