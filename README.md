@@ -1,15 +1,15 @@
-## Instalação
+## Instalaï¿½ï¿½o
 
 Requerimentos:
 
 * [NodeJS](https://nodejs.org/)
 
-## Lista de dependências
+## Lista de dependï¿½ncias
 * [AngularJS](https://docs.angularjs.org/)
 
-Todas as dependências são instalados com o ``Bower``
+Todas as dependï¿½ncias sï¿½o instalados com o ``Bower``
 
-### Para instalar as dependências
+### Para instalar as dependï¿½ncias
 
 ``` sh
 $ npm install
@@ -24,3 +24,9 @@ $ bower install
 ``` sh
 $ gulp serve
 ```
+
+
+# TO DO
+
+* Clean code 
+* Ajuste de cÃ³digo  

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">	
+	<title>sdfsd</title>
+	<link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../components/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../components/angular-ivh-treeview/dist/ivh-treeview.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	
+	
+</head>
+<body ng-app="myApp" 
+	  ng-controller="myCtrl" class="row">
+	<div class="col col-md-4" style="overflow: auto;border:1px solid;">
+		<h3 class="text-muted">Produtos</h3>
+	   <div class="row">
+
+		   <div class="col col-md-1">
+			<span class="fa fa-plus fa-lg mouse-click" 
+				ng-click='toggleModal()'
+				data-toggle="tooltip" 
+				data-placement="bottom" 
+				title="Adicionar"></span>
+		   </div>
+
+		   <div class="col col-md-1">
+			<span class="fa fa-pencil fa-lg mouse-click" 
+			ng-click="edit()"
+			data-toggle="tooltip" 
+			data-placement="bottom" 
+			title="Editar"></span>
+		   </div>
+
+		   <div class="col col-md-1">
+				<span class="fa fa-trash fa-lg mouse-click" 
+				ng-click="delete()"
+				data-toggle="tooltip" 
+				data-placement="bottom" 
+				title="Eliminar"></span>
+		   </div>
+
+		   <div class="col col-md-1 ml-auto">
+				<span class="fa fa-angle-down fa-2x mouse-click" 
+				ng-click="expandPens()"
+				data-toggle="tooltip" 
+				data-placement="bottom" 
+				title="Expandir Tudo"></span>
+		   </div>
+
+		   <div class="col col-md-1">
+				<span class="fa fa-angle-up fa-2x mouse-click" 
+				ng-click="collapsePens()"
+				data-toggle="tooltip" 
+				data-placement="bottom" 
+				title="Recolher Tudo"></span>
+		   </div>
+
+	   </div>
+
+
+	   <input type="text"  class="form-control" ng-model="filter" placeholder="Digite para filtrar.."/>
+	   
+	   <div ivh-treeview="stuff"
+	   		ivh-treeview-filter="filter"
+	   		ivh-treeview-use-checkbox="false"
+	   		ivh-treeview-on-cb-change="teste(ivhNode, ivhIsSelected, ivhTree)">
+		</div>
+
+	</div> 
+
+
+
+
+
+	<modal-dialog show='modalShown' produto='produto' valid='valid' width='400px' height='60%'>
+		<div class="row">
+			<div class="col-lg-offset-3 col-lg-6">
+				<div class="form-group">
+					<label>Código *</label>
+					<input type="number" ng-disabled="produto.edit" ng-change="changeCodigo()" ng-blur="leaveCodigo()" ng-class="{invalid : valid.cod}" ng-model="produto.codigo" class="form-control" placeholder="Código">								
+					<small ng-show="valid.cod && produto.codigo != null">
+						Já existe produto com o código {{ produto.codigo }}
+					</small>
+					<small ng-show="valid.cod && produto.codigo == null">
+						Campo código é obrigatório.
+					</small>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="form-group">
+					<label>Descrição *</label>
+					<input type="text" class="form-control" ng-change="changeDesc()" ng-blur="leaveDesc()" ng-class="{invalid : valid.desc}" ng-model="produto.descricao" placeholder="Descrição">
+					<small ng-show="valid.desc && produto.descricao == null || produto.descricao == ''">
+						Campo código é obrigatório.
+					</small>							
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="form-group">
+					<label>Observação</label>
+					<textarea class="form-control" ng-change="validaBtnSave()" ng-model="produto.observacao"></textarea>
+				</div>
+			</div>
+		</div>	
+		<button class="btn btn-primary" ng-disabled="!valid.salva" ng-click="tt()">Salvar</button>
+	</modal-dialog>
+
+
+
+	<script src="../components/angular/angular.min.js"></script>
+	<script src="../components/jquery/dist/jquery.min.js"></script>
+	<script src="../components/tether/dist/js/tether.min.js"></script>
+	<script src="../components/angular-ivh-treeview/dist/ivh-treeview.min.js"></script>
+	<script src="../components/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<script src="js/tree.module.js"></script>
+	<script src="js/modal.directive.js"></script>
+	<script src="js/tree.controller.js"></script>
+</body>
+</html>
