@@ -10,11 +10,11 @@ app.config(function(ivhTreeviewOptionsProvider) {
         defaultSelectedState: false,
         disableCheckboxSelectionPropagation: true,
         nodeTpl: [
-            '<div ng-class="{select: node.selected}">',
+            '<div>',
             '<span ivh-treeview-toggle>',
             '<span ivh-treeview-twistie class="mouse-click"></span>',
             '</span>',
-            '<span  data-toggle="tooltip" data-original-title="{{node.codigo}} - {{node.descricao}} - {{node.observacao}}" data-placement="bottom" title="{{node.codigo}} - {{node.descricao}} - {{node.observacao}}"  class="ivh-treeview-node-label mouse-click"  ng-click="trvw.toggleSelected(node)">',
+            '<span data-toggle="tooltip" data-original-title="{{node.codigo}} - {{node.descricao}} - {{node.observacao}}" data-placement="bottom" title="{{node.codigo}} - {{node.descricao}} - {{node.observacao}}"  class="ivh-treeview-node-label mouse-click" ng-class="{select: node.selected}" ng-click="trvw.toggleSelected(node)">',
             '{{trvw.label(node)}}',
             '</span>',
             '<div ivh-treeview-children></div>',
