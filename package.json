@@ -1,11 +1,10 @@
 {
   "name": "treasy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Desafio treasy",
   "main": "index.js",
   "scripts": {
-    "build" : "gulp build",
-    "server" : "http-server dist/ -o",
+    "start" : "gulp build && http-server dist/ -o",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

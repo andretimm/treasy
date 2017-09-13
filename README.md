@@ -20,13 +20,8 @@ $ npm install
 $ bower install
 ```
 
-### Criar build
+### Criar build e executar
 
 ``` sh
-$ gulp build
-```
-### Iniciar o server
-
-``` sh
-$ http-server dist/ -o
+$ npm start
 ```
