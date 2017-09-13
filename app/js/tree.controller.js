@@ -149,7 +149,7 @@ app.controller('treeController',['ivhTreeviewMgr',
         //Intervalo para colocar o tooltip
         $interval(function(){ 
             $('[data-toggle="tooltip"]').tooltip();
-        }, 500);
+        }, 10);
     }
 
     _this.delete= function() {

@@ -1,32 +1,32 @@
-## Instala��o
+## Instalação
 
 Requerimentos:
 
 * [NodeJS](https://nodejs.org/)
 
-## Lista de depend�ncias
-* [AngularJS](https://docs.angularjs.org/)
 
-Todas as depend�ncias s�o instalados com o ``Bower``
+Todas as dependências são instalados com o ``Bower``
 
-### Para instalar as depend�ncias
+### Para instalar as dependências
+
+``` sh
+$ npm install bower -g
+$ npm install http-server -g
+$ npm install gulp -g
+```
 
 ``` sh
 $ npm install
-```
-
-``` sh
 $ bower install
 ```
 
-## Criar servirdor com LiveSync
+### Criar build
 
 ``` sh
-$ gulp serve
+$ gulp build
 ```
+### Iniciar o server
 
-
-# TO DO
-
-* Clean code 
-* Ajuste de código  
+``` sh
+$ http-server dist/ -o
+```

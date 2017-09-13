@@ -24,6 +24,6 @@ app.directive('modalDialog', function() {
                           };
         };
       },
-      templateUrl: 'directive/modal.view.html' 
+      templateUrl: 'js/directive/modal.view.html' 
     };
   });
