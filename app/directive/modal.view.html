@@ -1,0 +1,14 @@
+<div ng-show='show'>
+    <div class='directive-modal-overlay' ng-click='hideModal()'></div>
+    <div class='directive-modal-dialog'>
+        <div class='card'>
+            <div class='card-header'>
+                Produto
+                <div class='directive-modal-close' ng-click='hideModal()'>X</div>
+            </div>
+            <div class='card-body' ng-transclude>
+                <!--Conteudo-->
+            </div>
+        </div>
+    </div>
+</div>

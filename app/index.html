@@ -1,91 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">	
-	<title>sdfsd</title>
+	<meta charset="utf-8">
+	<meta name="description" content="Desafio Treasy">
+	<meta name="keywords" content="angularJs,treasy,andre,timm,andretimm">
+	<meta name="author" content="andretimm">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<title>Desafio - Treasy</title>
+
 	<link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../components/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="../components/angular-ivh-treeview/dist/ivh-treeview.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	
 	
 </head>
-<body ng-app="myApp" 
-	  ng-controller="myCtrl" class="row">
-	<div class="col col-md-4" style="overflow: auto;">
+<body ng-app="treeApp" 
+	  ng-controller="treeController as tree" 
+	  class="row justify-content-md-center">
+
+	<div class="col-md-4 tree" 
+		 ng-init="tree.init()">
+
 		<h3 class="text-muted">Produtos</h3>
-	   <div class="row">
 
-		   <div class="col col-md-1">
-			<span class="fa fa-plus fa-lg mouse-click" 
-				ng-click='toggleModal()'
-				data-toggle="tooltip" 
-				data-placement="bottom" 
-				title="Adicionar"></span>
-		   </div>
+		<div class="row">
 
-		   <div class="col col-md-1">
-			<span class="fa fa-pencil fa-lg mouse-click" 
-			ng-click="edit()"
-			data-toggle="tooltip" 
-			data-placement="bottom" 
-			title="Editar"></span>
-		   </div>
+			<div class="col col-md-1">
+				<span class="fa fa-plus fa-lg mouse-click" 
+					  ng-click='tree.toggleModal()'
+					  data-toggle="tooltip" 
+					  data-placement="bottom" 
+					  title="Adicionar"></span>
+			</div>
 
-		   <div class="col col-md-1">
+			<div class="col col-md-1">
+				<span class="fa fa-pencil fa-lg mouse-click" 
+					  ng-click="tree.edit()"
+					  data-toggle="tooltip" 
+					  data-placement="bottom" 
+					  title="Editar"></span>
+			</div>
+
+			<div class="col col-md-1">
 				<span class="fa fa-trash fa-lg mouse-click" 
-				ng-click="delete()"
-				data-toggle="tooltip" 
-				data-placement="bottom" 
-				title="Eliminar"></span>
-		   </div>
+					  ng-click="tree.delete()"
+					  data-toggle="tooltip" 
+					  data-placement="bottom" 
+					  title="Eliminar"></span>
+			</div>
 
-		   <div class="col col-md-1 ml-auto">
+			<div class="col col-md-1 ml-auto">
 				<span class="fa fa-angle-down fa-2x mouse-click" 
-				ng-click="expandPens()"
-				data-toggle="tooltip" 
-				data-placement="bottom" 
-				title="Expandir Tudo"></span>
-		   </div>
+					  ng-click="tree.expandAll()"
+					  data-toggle="tooltip" 
+					  data-placement="bottom" 
+					  title="Expandir Tudo"></span>
+			</div>
 
-		   <div class="col col-md-1">
+			<div class="col col-md-1">
 				<span class="fa fa-angle-up fa-2x mouse-click" 
-				ng-click="collapsePens()"
-				data-toggle="tooltip" 
-				data-placement="bottom" 
-				title="Recolher Tudo"></span>
-		   </div>
+					  ng-click="tree.collapseAll()"
+					  data-toggle="tooltip" 
+					  data-placement="bottom" 
+					  title="Recolher Tudo"></span>
+			</div>
 
-	   </div>
+		</div><!--/.row--> 
 
 
-	   <input type="text" class="form-control" 
-				ng-model="filter"
-				ng-change="onFilterChange(filter)" 
-				placeholder="Digite para filtrar.."/>
+		<input type="text" 
+			   class="form-control" 
+			   ng-model="tree.filter"
+			   ng-change="tree.onFilterChange(tree.filter)" 
+			   placeholder="Digite para filtrar.."/>
 	   
-	   <div ivh-treeview="stuff"
-	   		ivh-treeview-filter="filter"
-	   		ivh-treeview-use-checkbox="false"
-	   		ivh-treeview-on-cb-change="teste(ivhNode, ivhIsSelected, ivhTree)">
+		<div ivh-treeview="tree.stuff"
+	   		 ivh-treeview-filter="tree.filter"
+	   		 ivh-treeview-on-cb-change="tree.selectNode(ivhNode, ivhIsSelected, ivhTree)">
 		</div>
 
-	</div> 
+	</div><!--/.col-md-4--> 
 
-
-
-
-
-	<modal-dialog show='modalShown' produto='produto' valid='valid' width='400px' height='60%'>
+	<!--Modal-->
+	<modal-dialog show='tree.modalShown' 
+				  produto='tree.produto' 
+				  valid='tree.valid' 
+				  width='400px' 
+				  height='60%'>
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6">
 				<div class="form-group">
 					<label>Código *</label>
-					<input type="number" ng-disabled="produto.edit" ng-change="changeCodigo()" ng-blur="leaveCodigo()" ng-class="{invalid : valid.cod}" ng-model="produto.codigo" class="form-control" placeholder="Código">								
-					<small ng-show="valid.cod && produto.codigo != null">
-						Já existe produto com o código {{ produto.codigo }}
+					<input type="number" 
+						   ng-disabled="tree.produto.edit" 
+						   ng-change="tree.changeCod()" 
+						   ng-blur="tree.leaveCod()" 
+						   ng-class="{invalid : tree.valid.cod}"
+						   ng-model="tree.produto.codigo" 
+						   class="form-control" 
+						   placeholder="Código">								
+					<small ng-show="tree.valid.cod && tree.produto.codigo != null">
+						Já existe produto com o código {{ tree.produto.codigo }}
 					</small>
-					<small ng-show="valid.cod && produto.codigo == null">
+					<small ng-show="tree.valid.cod && tree.produto.codigo == null">
 						Campo código é obrigatório.
 					</small>
 				</div>
@@ -93,8 +111,14 @@
 			<div class="col-lg-12">
 				<div class="form-group">
 					<label>Descrição *</label>
-					<input type="text" class="form-control" ng-change="changeDesc()" ng-blur="leaveDesc()" ng-class="{invalid : valid.desc}" ng-model="produto.descricao" placeholder="Descrição">
-					<small ng-show="valid.desc && produto.descricao == null || produto.descricao == ''">
+					<input type="text" 
+						   class="form-control" 
+						   ng-change="tree.changeDesc()" 
+						   ng-blur="tree.leaveDesc()" 
+						   ng-class="{invalid : tree.valid.desc}" 
+						   ng-model="tree.produto.descricao" 
+						   placeholder="Descrição">
+					<small ng-show="tree.valid.desc && tree.produto.descricao == null || tree.produto.descricao == ''">
 						Campo código é obrigatório.
 					</small>							
 				</div>
@@ -102,12 +126,19 @@
 			<div class="col-lg-12">
 				<div class="form-group">
 					<label>Observação</label>
-					<textarea class="form-control" ng-change="validaBtnSave()" ng-model="produto.observacao"></textarea>
+					<textarea class="form-control" 
+							  ng-change="tree.validaBtnSave()" 
+							  ng-model="tree.produto.observacao"></textarea>
 				</div>
 			</div>
 		</div>	
-		<button class="btn btn-primary" ng-disabled="!valid.salva" ng-click="tt()">Salvar</button>
+		<button class="btn btn-primary" 
+				ng-disabled="!tree.valid.salva" 
+				ng-click="tree.save()">
+			Salvar
+		</button>
 	</modal-dialog>
+	<!--/Modal-->
 
 
 
@@ -117,8 +148,9 @@
 	<script src="../components/angular-ivh-treeview/dist/ivh-treeview.min.js"></script>
 	<script src="../components/bootstrap/dist/js/bootstrap.min.js"></script>
 	
-	<script src="js/tree.module.js"></script>
-	<script src="js/modal.directive.js"></script>
-	<script src="js/tree.controller.js"></script>
+	<script src="tree.module.js"></script>
+	<script src="tree.config.js"></script>
+	<script src="directive/modal.directive.js"></script>
+	<script src="tree.controller.js"></script>
 </body>
 </html>

@@ -1,13 +1,11 @@
 var gulp = require('gulp');
-
 var uglify = require('gulp-uglify');
-
 var minify = require('gulp-minify-css');
 
 var browserSync = require('browser-sync').create();
 
 // Static server
-gulp.task('server', function() {
+gulp.task('live-sync', function() {
     browserSync.init({
         server: "./"
     });
@@ -56,5 +54,5 @@ gulp.task('css', function() {
 
 gulp.task('build',['copy','js','css']);
 
-gulp.task('default', ['server']);
+gulp.task('live-sync', ['live-sync']);
  
